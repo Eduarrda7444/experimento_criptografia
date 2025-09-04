@@ -20,7 +20,6 @@ O desafio é identificar qual palavra está representada em **binário (ASCII 8 
    ```bash
    git clone https://github.com/seu-usuario/adivinhe-binario.git
    cd adivinhe-binario
-``
 
 2. Instale as dependências:
 
