@@ -3,326 +3,111 @@ import random
 
 st.set_page_config(page_title="Adivinhe a Palavra", page_icon="🧠", layout="centered")
 
-# Lista de palavras expandida
+# Lista de palavras
 palavras = [
-    "soma", "raiz", "pi", "reta", "grau", "aluno", "zero", "média", "teto", "ângulo",
-    "par", "ímpar", "vetor", "x", "y", "eixo", "area", "volume", "regra", "base",
-    "matriz", "número", "conta", "sinal", "dados", "função", "derivada", "integral",
-    "átomo", "sol", "lua", "céu", "cloro", "ar", "vento", "fóton", "célula", "flora",
-    "fauna", "pedra", "régio", "onda", "sal", "gás", "pólen", "ferro", "ácido", "neve",
-    "água", "calor", "plantas", "oxigênio", "plasma", "galáxia", "estrela", "quasar",
-    "cometa", "buraco", "negro", "astro", "sistema", "planeta", "luz", "som", "energia",
-    "campo", "força", "massa", "velocidade", "tempo"
+    "soma","raiz","pi","reta","grau","aluno","zero","media","teto","angulo","par","impar",
+    "vetor","x","y","eixo","area","volume","regra","base","matriz","numero","conta","sinal",
+    "dados","funcao","derivada","integral","atomo","sol","lua","ceu","cloro","ar","vento",
+    "foton","celula","flora","fauna","pedra","regio","onda","sal","gas","polen","ferro",
+    "acido","neve","agua","calor","plantas","oxigenio","plasma","galaxia","estrela","quasar",
+    "cometa","buraco","negro","astro","sistema","planeta","luz","som","energia","campo",
+    "forca","massa","velocidade","tempo"
 ]
 
-# Funções
-def gerar_palavra():
+def gerar_palavra(): 
     return random.choice(palavras)
 
-def converter_para_binario(palavra):
-    return " ".join(format(ord(c), "08b") for c in palavra)
+def converter(p): 
+    return " ".join(format(ord(c), "08b") for c in p)
 
-# CSS estilo hacker moderno com fundo preto
+# CSS simplificado
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-
-html, body, [class*="css"] {
-    font-family: 'JetBrains Mono', monospace;
-    background-color: #000000;
-    color: #ffffff;
-}
-
-.stApp {
-    background-image: radial-gradient(circle at 15% 50%, rgba(0, 80, 80, 0.1) 0%, rgba(0, 0, 0, 0.99) 60%);
-}
-
-.main {
-    background-color: rgba(0, 0, 0, 0.85);
-    padding: 3rem 2rem;
-    border-radius: 15px;
-    border: 1px solid rgba(0, 255, 255, 0.3);
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
-    position: relative;
-    overflow: hidden;
-}
-
-.main::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #00ffff, transparent);
-    animation: scanline 8s linear infinite;
-}
-
-@keyframes scanline {
-    0% { top: 0%; }
-    100% { top: 100%; }
-}
-
-h1 {
-    text-align: center;
-    color: #00ffff;
-    font-size: 2.8rem;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
-    letter-spacing: 2px;
-    position: relative;
-    padding-bottom: 15px;
-}
-
-h1::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #00ffff, transparent);
-}
-
-h2, h3 {
-    color: #00ffff;
-    border-left: 4px solid #00ffff;
-    padding-left: 12px;
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-}
-
-.code-container {
-    background-color: rgba(0, 20, 20, 0.9);
-    padding: 25px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 255, 255, 0.3);
-    margin: 25px 0;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.code-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, rgba(0, 255, 255, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.code-content {
-    color: #00ffff;
-    font-size: 1.2rem;
-    line-height: 1.8;
-    text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
-    letter-spacing: 1px;
-}
-
-.stTextInput>div>div>input {
-    background-color: rgba(0, 30, 30, 0.8) !important;
-    color: #00ffff !important;
-    border: 2px solid rgba(0, 255, 255, 0.4) !important;
-    border-radius: 6px;
-    padding: 12px 15px;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-}
-
-.stTextInput>div>div>input:focus {
-    border: 2px solid #00ffff !important;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-    outline: none;
-}
-
-.stTextInput>div>div>input::placeholder {
-    color: rgba(0, 255, 255, 0.6) !important;
-}
-
-.stButton>button {
-    background: linear-gradient(to right, #003333, #001a1a) !important;
-    color: #00ffff !important;
-    border: none !important;
-    border-radius: 6px;
-    padding: 12px 24px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-    width: 100%;
-    margin-top: 10px;
-    position: relative;
-    overflow: hidden;
-}
-
-.stButton>button::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(to right, transparent, rgba(0, 255, 255, 0.2), transparent);
-    transform: rotate(45deg);
-    animation: shine 3s infinite;
-}
-
-@keyframes shine {
-    0% { left: -50%; }
-    100% { left: 150%; }
-}
-
-.stButton>button:hover {
-    background: linear-gradient(to right, #004444, #002222) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-}
-
-.stButton>button:active {
-    transform: translateY(0);
-}
-
-.info-box {
-    background: rgba(0, 30, 30, 0.7);
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 4px solid #00ffff;
-    margin: 20px 0;
-}
-
-.stAlert {
-    border-radius: 8px;
-    padding: 15px 20px;
-    background-color: rgba(0, 0, 0, 0.8) !important;
-    border: 1px solid;
-}
-
-.stSuccess {
-    border-color: rgba(0, 255, 0, 0.3) !important;
-    color: #00ff00 !important;
-}
-
-.stError {
-    border-color: rgba(255, 0, 0, 0.3) !important;
-    color: #ff5555 !important;
-}
-
-.stInfo {
-    border-color: rgba(0, 150, 255, 0.3) !important;
-    color: #55aaff !important;
-}
-
-.footer {
-    text-align: center;
-    margin-top: 40px;
-    color: rgba(0, 255, 255, 0.7);
-    font-size: 0.9rem;
-    padding-top: 20px;
-    border-top: 1px solid rgba(0, 255, 255, 0.2);
-}
-
-.pulse {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(0, 255, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
-}
-
-.erro-counter {
-    background-color: rgba(255, 0, 0, 0.1);
-    color: #ff5555;
-    padding: 10px 15px;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 0, 0, 0.3);
-    display: inline-block;
-    margin-top: 15px;
-}
-
-.dica-box {
-    background-color: rgba(0, 100, 100, 0.2);
-    padding: 15px;
-    border-radius: 6px;
-    border: 1px solid rgba(0, 255, 255, 0.3);
-    margin: 10px 0;
-}
-
-#MainMenu, header, footer {visibility: hidden;}
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+html,body,[class*="css"]{font-family:'Share Tech Mono',monospace;background:#000;color:#fff}
+.stApp{background:radial-gradient(circle at 15% 50%,rgba(0,255,170,0.05)0%,#000 70%)}
+.main{background:rgba(0,0,0,.85);padding:2rem;border-radius:15px;
+      border:1px solid rgba(0,255,170,.4);box-shadow:0 0 25px rgba(0,255,170,.3)}
+h1{text-align:center;color:#00ffaa;font-size:2.5rem;text-shadow:0 0 20px #00ffaa}
+.code-box{background:rgba(0,30,30,.9);padding:15px;border-radius:10px;
+          border:1px solid rgba(0,255,170,.4);margin:20px 0}
+.code{color:#00ffaa;font-size:1.2rem;text-shadow:0 0 10px rgba(0,255,170,.6)}
+.stTextInput>div>div>input{background:rgba(0,20,20,.9)!important;color:#00ffaa!important;
+    border:2px solid rgba(0,255,170,.5)!important;border-radius:8px;padding:10px;font-size:1rem}
+.stTextInput>div>div>input:focus{border:2px solid #00ffaa!important;
+    box-shadow:0 0 15px rgba(0,255,170,.4)}
+.stButton>button{background:linear-gradient(to right,#003333,#001a1a)!important;color:#00ffaa!important;
+    border-radius:8px;padding:10px 20px;font-weight:bold;box-shadow:0 0 10px rgba(0,255,170,.3);width:100%}
+.stButton>button:hover{background:linear-gradient(to right,#004444,#002222)!important;transform:translateY(-2px)}
+.hint,.erro{margin:10px 0;padding:10px;border-radius:6px;font-size:.95rem}
+.hint{background:rgba(0,100,100,.2);border:1px solid rgba(0,255,170,.3);color:#55ffaa}
+.erro{background:rgba(255,0,0,.1);border:1px solid rgba(255,0,0,.3);color:#f55}
+.footer{text-align:center;margin-top:30px;color:rgba(0,255,170,.7);font-size:.9rem}
+#MainMenu,header,footer{visibility:hidden}
 </style>
 """, unsafe_allow_html=True)
 
-# Inicialização da sessão
+# Sessão inicial
 if "palavra" not in st.session_state:
-    st.session_state.palavra = gerar_palavra()
-    st.session_state.binario = converter_para_binario(st.session_state.palavra)
-    st.session_state.erros = 0
-    st.session_state.acertou = False
+    st.session_state.update({
+        "palavra": gerar_palavra(),
+        "binario": "",
+        "erros": 0,
+        "acertou": False
+    })
+    st.session_state.binario = converter(st.session_state.palavra)
 
-# Container principal
-with st.container():
-    st.markdown('<div class="main">', unsafe_allow_html=True)
-    
-    # Título e instruções
-    st.markdown("<h1>🧩 DECIFRE O CÓDIGO BINÁRIO</h1>", unsafe_allow_html=True)
-    st.write("Descubra a palavra oculta por trás deste código:")
+# Função de dicas
+def mostrar_dicas():
+    if st.session_state.erros == 2:
+        st.markdown(f'<div class="hint">💡 A palavra tem {len(st.session_state.palavra)} letras.</div>', unsafe_allow_html=True)
+    if st.session_state.erros >= 3:
+        st.markdown(f'<div class="hint">🔍 A primeira letra é "{st.session_state.palavra[0].upper()}"</div>', unsafe_allow_html=True)
 
-    # Exibir binário com estilo
-    st.markdown('<div class="code-container"><div class="code-content">', unsafe_allow_html=True)
-    st.code(st.session_state.binario, language="text")
-    st.markdown('</div></div>', unsafe_allow_html=True)
+# Interface
+st.markdown("<h1>DECIFRE O CÓDIGO BINÁRIO</h1>", unsafe_allow_html=True)
 
-    # Explicação ASCII
-    with st.expander("ℹ️ **COMO FUNCIONA**", expanded=True):
-        st.markdown("""
-        - Cada caractere tem um número na tabela **ASCII** (ex: `"a"` → 97)  
-        - Esse número é convertido em binário de 8 bits (ex: `97` → `01100001`)  
-        - A palavra é formada juntando os binários de cada letra
-        """)
+# Texto explicativo
+st.markdown("""
+<div style="text-align:center; font-size:1.1rem; margin-bottom:15px;">
+    <p>💻 Você recebeu uma sequência de <b>bits</b>.</p>
+    <p>🔎 Sua missão é decifrar e descobrir qual <b>palavra secreta</b> eles escondem.</p>
+    <p>❌ Cada erro aumenta suas tentativas e libera <b>dicas especiais</b>.<br>
+    🎯 Acerte para desbloquear a vitória!</p>
+</div>
+""", unsafe_allow_html=True)
 
-    # Formulário de resposta
-    with st.form("form_resposta"):
-        resposta = st.text_input("**Digite sua resposta:**", placeholder="Escreva a palavra aqui...")
-        submit = st.form_submit_button("🚀 VERIFICAR RESPOSTA", use_container_width=True)
+# Exibe o binário
+st.markdown(f'<div class="code-box"><div class="code">{st.session_state.binario}</div></div>', unsafe_allow_html=True)
 
-        if submit and not st.session_state.acertou:
-            if resposta.lower().strip() == st.session_state.palavra:
-                st.success("🎉 Parabéns! Você decifrou o código corretamente!")
-                st.balloons()
-                st.session_state.acertou = True
-            else:
-                st.session_state.erros += 1
-                st.error(f"❌ Resposta incorreta! Tentativa #{st.session_state.erros}")
-                if st.session_state.erros >= 2:
-                    with st.container():
-                        st.markdown('<div class="dica-box">', unsafe_allow_html=True)
-                        st.info(f"💡 Dica: A palavra tem {len(st.session_state.palavra)} letras.")
-                        st.markdown('</div>', unsafe_allow_html=True)
-                if st.session_state.erros >= 3:
-                    with st.container():
-                        st.markdown('<div class="dica-box">', unsafe_allow_html=True)
-                        st.info(f"🔍 Dica adicional: A primeira letra é '{st.session_state.palavra[0].upper()}'")
-                        st.markdown('</div>', unsafe_allow_html=True)
+# Formulário de resposta
+with st.form("resposta"):
+    r = st.text_input("Digite sua resposta:", placeholder="Escreva aqui...").lower().strip()
+    if st.form_submit_button("🚀 VERIFICAR"):
+        if r == st.session_state.palavra:
+            st.success("🎉 Parabéns! Você decifrou o código!")
+            st.balloons()
+            st.session_state.acertou = True
+        else:
+            st.session_state.erros += 1
+            st.error(f"❌ Tentativa #{st.session_state.erros}")
+            mostrar_dicas()
 
-    # Botão para nova palavra
-    if st.button("🔄 GERAR NOVO DESAFIO", use_container_width=True, type="primary"):
-        st.session_state.palavra = gerar_palavra()
-        st.session_state.binario = converter_para_binario(st.session_state.palavra)
-        st.session_state.erros = 0
-        st.session_state.acertou = False
-        st.rerun()
+# Botão de novo desafio
+if st.button("🔄 NOVO DESAFIO", use_container_width=True):
+    st.session_state.update({
+        "palavra": gerar_palavra(),
+        "binario": "",
+        "erros": 0,
+        "acertou": False
+    })
+    st.session_state.binario = converter(st.session_state.palavra)
+    st.rerun()
 
-    # Exibir contador de erros
-    if not st.session_state.acertou and st.session_state.erros > 0:
-        st.markdown(f'<div class="erro-counter"><strong>Tentativas:</strong> {st.session_state.erros}</div>', unsafe_allow_html=True)
+# Exibe número de tentativas
+if not st.session_state.acertou and st.session_state.erros:
+    st.markdown(f'<div class="erro"><strong>Tentativas:</strong> {st.session_state.erros}</div>', unsafe_allow_html=True)
 
-    # Rodapé
-    st.markdown('<div class="footer">', unsafe_allow_html=True)
-    st.write("Desafie suas habilidades de decodificação!")
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+# Rodapé
+st.markdown('<div class="footer">Desafie suas habilidades de decodificação!</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
