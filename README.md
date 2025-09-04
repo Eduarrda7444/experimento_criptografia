@@ -18,8 +18,8 @@ O desafio é identificar qual palavra está representada em **binário (ASCII 8 
 
 1. Clone este repositório:  
    ```bash
-   git clone https://github.com/seu-usuario/adivinhe-binario.git
-   cd adivinhe-binario
+   git clone https://github.com/Eduarrda7444/experimento_criptografia.git
+   cd experimento_criptografia
 
 2. Instale as dependências:
 
