@@ -1,6 +1,3 @@
-Perfeito! Aqui está o README completo, dentro de um único bloco de código, com os badges de **Python** e **Streamlit**:
-
-````markdown
 # 🧩 Adivinhe a Palavra em Binário  
 
 Aplicação desenvolvida em **Python** utilizando **Streamlit**.  
@@ -23,7 +20,7 @@ O desafio é identificar qual palavra está representada em **binário (ASCII 8 
    ```bash
    git clone https://github.com/seu-usuario/adivinhe-binario.git
    cd adivinhe-binario
-````
+``
 
 2. Instale as dependências:
 
